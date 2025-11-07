@@ -118,14 +118,18 @@
     </footer>
 
   <script type="module">
-    import { crearForo, cargarForos } from "../JavaScript/foro.js";
+      import { crearForo, cargarForos } from "../JavaScript/foro.js";
+  
+      window.crearForo = crearForo;   // Para poder llamarlo desde onclick
+      window.cargarForos = cargarForos; // << ESTA LÍNEA FALTABA
+  
+      cargarForos();   // Llamada inicial
+  </script>
 
-    window.crearForo = crearForo;
-    cargarForos();
-</script>
 
 </body>
 </html>
+
 
 
 

@@ -32,7 +32,10 @@
                 <li><a href="comunidad.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Comunidad</a></li>
                 <li><a href="Contacto.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Contacto</a></li>
                 <li><a href="cookies.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Cookies</a></li>
-                <li><a href="login.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Ingresar</a></li>
+
+
+                <li id="btnAuthArea"></li>
+                
                 </ul>
             </nav>
         </div>
@@ -168,6 +171,53 @@
         </script>
             <script src="../JavaScript/ScriptBoton.js"></script>
     </footer>
+        <script type="module">
+      import { onUserChanged, logout } from "../JavaScript/auth.js";
+      
+      const area = document.getElementById("btnAuthArea");
+      
+      onUserChanged((user) => {
+          if (!area) return;
+      
+          if (user) {
+              // ✅ Usuario logueado → mostrará menú Mi Cuenta
+              area.innerHTML = `
+                  <div class="relative group">
+                      <button class="font-semibold text-green-300 hover:text-white">Mi Cuenta</button>
+                      <div class="absolute hidden group-hover:block bg-green-900 text-white p-3 rounded-lg shadow-lg right-0 mt-2">
+                          <p class="text-sm mb-2 opacity-80">${user.email}</p>
+                          <button id="logoutBtn"
+                                  class="w-full text-left hover:text-yellow-400 font-bold">
+                              Cerrar sesión
+                          </button>
+                      </div>
+                  </div>
+              `;
+      
+              // ✅ Activar botón logout
+              setTimeout(() => {
+                  const logoutBtn = document.getElementById("logoutBtn");
+                  if (logoutBtn) {
+                      logoutBtn.onclick = async () => {
+                          await logout();
+                          window.location.reload();
+                      };
+                  }
+              }, 50);
+      
+          } else {
+              // ✅ Usuario NO logueado → mostrar Ingresar
+              area.innerHTML = `
+                  <a href="login.html" 
+                     class="text-blue-50 font-semibold hover:text-green-300">
+                     Ingresar
+                  </a>
+              `;
+          }
+      });
+      </script>
+
 </body>
 </html>
+
 

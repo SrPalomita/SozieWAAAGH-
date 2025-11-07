@@ -1,4 +1,7 @@
-// Inicializar Firebase
+// firebase.js (MODULAR v10)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyBZJ9F7ZqxGcXJ1MxduQ_2KeobguPIE0",
     authDomain: "soziewaaagh.firebaseapp.com",
@@ -8,5 +11,5 @@ const firebaseConfig = {
     appId: "1:520458694843:web:9a70d1e644c82c3148399e"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+export const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);

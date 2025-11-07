@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foro — SozieWAAAGH!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/jpeg" href="../Imagenes/logo.jpeg">
+</head>
+
+<body class="bg-gradient-to-r from-green-800 via-green-600 to-green-500 text-white font-sans">
+
+    <!-- Header básico -->
+    <header class="p-5 bg-black/30 backdrop-blur-md sticky top-0 z-50">
+        <h1 class="text-center text-3xl font-extrabold text-yellow-400">Foro Orko</h1>
+    </header>
+
+    <main class="max-w-3xl mx-auto mt-10 p-6">
+
+        <!-- Info del foro -->
+        <div id="foroInfo" class="bg-green-900 p-6 rounded-lg shadow-lg mb-8">
+            <h2 id="foroTitulo" class="text-3xl font-bold text-yellow-300 mb-2"></h2>
+            <p id="foroDescripcion" class="text-lg text-gray-200"></p>
+        </div>
+
+        <!-- Comentarios -->
+        <h3 class="text-2xl font-bold text-yellow-400 mb-4">Comentarios</h3>
+
+        <div id="comentariosLista" class="space-y-4 mb-8"></div>
+
+        <!-- Agregar comentario -->
+        <div class="bg-green-900 p-5 rounded-lg shadow-lg">
+            <input id="comentarioAutor" 
+                   class="w-full p-2 mb-3 rounded text-black"
+                   placeholder="Tu nombre orko (opcional)">
+            
+            <textarea id="comentarioTexto" 
+                      class="w-full p-2 mb-3 rounded text-black"
+                      placeholder="Escribe tu comentario..."></textarea>
+
+            <button onclick="agregarComentario()" 
+                class="bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-300 transition">
+                Agregar comentario
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"></script>
+
+    <!-- Configuración Firebase (tu archivo) -->
+    <script src="../JavaScript/firebase.js"></script>
+
+    <script>
+        // ========================
+        // 1. Obtener ID desde URL
+        // ========================
+        const params = new URLSearchParams(window.location.search);
+        const foroId = params.get("id");
+
+        if (!foroId) {
+            alert("Error: no se encontró el foro.");
+            window.location.href = "comunidad.html";
+        }
+
+        // ========================
+        // 2. Cargar datos del foro
+        // ========================
+        function cargarForo() {
+            db.collection("foros").doc(foroId).onSnapshot(doc => {
+                if (!doc.exists) return;
+
+                const foro = doc.data();
+                document.getElementById("foroTitulo").innerText = foro.titulo;
+                document.getElementById("foroDescripcion").innerText = foro.descripcion;
+            });
+        }
+
+        // ========================
+        // 3. Cargar comentarios
+        // ========================
+        function cargarComentarios() {
+            const lista = document.getElementById("comentariosLista");
+
+            db.collection("foros")
+              .doc(foroId)
+              .collection("comentarios")
+              .orderBy("fecha", "asc")
+              .onSnapshot(snapshot => {
+
+                  lista.innerHTML = ""; 
+
+                  snapshot.forEach(doc => {
+                      const comentario = doc.data();
+
+                      lista.innerHTML += `
+                          <div class="bg-green-800 p-4 rounded-lg shadow">
+                              <p class="font-bold text-yellow-300">${comentario.autor || "Orko Anónimo"}</p>
+                              <p>${comentario.texto}</p>
+                              <p class="text-gray-300 text-sm mt-2">${new Date(comentario.fecha).toLocaleString()}</p>
+                          </div>
+                      `;
+                  });
+              });
+        }
+
+        // ========================
+        // 4. Agregar comentario
+        // ========================
+        async function agregarComentario() {
+
+            const autor = document.getElementById("comentarioAutor").value || "Orko Anónimo";
+            const texto = document.getElementById("comentarioTexto").value;
+
+            if (!texto.trim()) {
+                alert("Tu comentario está vacío.");
+                return;
+            }
+
+            await db.collection("foros")
+                    .doc(foroId)
+                    .collection("comentarios")
+                    .add({
+                        autor: autor,
+                        texto: texto,
+                        fecha: Date.now()
+                    });
+
+            document.getElementById("comentarioTexto").value = "";
+        }
+
+        // Inicializar
+        cargarForo();
+        cargarComentarios();
+    </script>
+
+</body>
+</html>

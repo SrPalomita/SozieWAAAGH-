@@ -4,6 +4,7 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updateProfile,
   signOut,
   onAuthStateChanged,
   sendPasswordResetEmail
@@ -12,19 +13,42 @@ import {
 export const auth = getAuth();
 export const provider = new GoogleAuthProvider();
 
+// ✅ Generador de nombre automático
+function generarNombreOrko() {
+  const n = Math.floor(Math.random() * 9000) + 1000;
+  return "Orko_" + n;
+}
+
+// ✅ Asegurar nombre al usuario
+async function asegurarNombre(usuario) {
+  if (!usuario) return;
+
+  if (!usuario.displayName || usuario.displayName === "") {
+    await updateProfile(usuario, {
+      displayName: generarNombreOrko()
+    });
+  }
+}
+
 // ✅ Login con Google
 export async function loginWithGoogle() {
-  return await signInWithPopup(auth, provider);
+  const userCred = await signInWithPopup(auth, provider);
+  await asegurarNombre(userCred.user);
+  return userCred;
 }
 
 // ✅ Login con Email/Password
 export async function loginWithEmail(email, password) {
-  return await signInWithEmailAndPassword(auth, email, password);
+  const userCred = await signInWithEmailAndPassword(auth, email, password);
+  await asegurarNombre(userCred.user);
+  return userCred;
 }
 
 // ✅ Registro
 export async function registerUser(email, password) {
-  return await createUserWithEmailAndPassword(auth, email, password);
+  const userCred = await createUserWithEmailAndPassword(auth, email, password);
+  await asegurarNombre(userCred.user);
+  return userCred;
 }
 
 // ✅ Cerrar sesión
@@ -32,12 +56,16 @@ export async function logout() {
   return await signOut(auth);
 }
 
-// ✅ Listener cuando cambia el usuario
+// ✅ Listener
 export function onUserChanged(callback) {
-  return onAuthStateChanged(auth, callback);
+  onAuthStateChanged(auth, async (user) => {
+    if (user) await asegurarNombre(user);
+    callback(user);
+  });
 }
 
-// ✅ Reset Password (opcional usar más adelante)
+// ✅ Recuperar contraseña
 export async function resetPassword(email) {
   return await sendPasswordResetEmail(auth, email);
 }
+

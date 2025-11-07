@@ -1,107 +1,204 @@
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="es">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="icon" type="image/jpeg" href="../Imagenes/logo.jpeg"> 
-        <link rel="stylesheet" href="../Css/styleBotonOscuro.css">
-        <link rel="stylesheet" href="../Css/StyleBoton.css">
-        <script src="https://cdn.tailwindcss.com"></script> 
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Ingresar — SozieWAAAGH!</title>
+      <link rel="icon" type="image/png" href="../Imagenes/logo.jpeg">
+      <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="bg-gradient-to-r from-green-800 via-green-500 to-green-400 text-white font-sans">
-        <header class="sticky top-0 z-50 bg-black/20 backdrop-blur-md"> 
-        <div class="flex items-center justify-between px-7 py-5 relative"> 
-
-            <!-- Logo + título --> 
-            <div class="flex items-center gap-3"> 
-            <img src="../Imagenes/logo.jpeg" alt="Logo ORK" class="w-12 h-12 rounded-lg"> 
-            <span class="text-xl font-bold">SozieWAAAGH!</span> 
-            </div> 
-
-            <!-- Navegación --> 
-            <nav class="absolute left-1/2 transform -translate-x-1/2"> 
-            <ul class="flex space-x-8"> 
-                <li><a href="Index.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Inicio</a></li>
-                <li><a href="sociedad.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Sociedad</a></li>
-                <li><a href="comunidad.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Comunidad</a></li>
-                <li><a href="Contacto.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Contacto</a></li>
-            </ul> 
-            </nav> 
-        </div> 
-        </header>
-
-        <main>
-            <!-- Formulario -->
-        <form id="myForm">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre">
-
-            <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" name="email">
-
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password">
-
-            <button type="submit">Enviar</button>
-
-            
-        </form>
-
-        
-
-        </main>
-
-        <footer class="bg-green-900 text-gray-200 pt-10 text-center md:text-left">
-            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
-
-                <!-- Columna 1: Logo, Descripción, Redes -->
-                <div class="md:text-left">
-                <div class="flex items-center gap-3 mb-3 justify-center md:justify-start">
-                    <img src="../Imagenes/logo.jpeg" alt="Logo Orko" class="w-12 h-12 rounded-full">
-                    <h2 class="text-2xl font-bold">SoziWAAAGH</h2>
-                </div>
-                <p class="text-sm mb-4">
-                    Aquí conocerás a los orkos de Warhammer 40k como también info. de estos y foros con otros usuarios con datos al respecto.
-                </p>
-                </div>
-
-                <!-- Columna 2: Quick Link -->
-                <div class="flex flex-col items-center">
-                    <h3 class="text-2xl font-bold mb-3 ">Quick Links</h3>
-                    <ul class="space-y-2 text-justify-center">
-                        <li><a href="index.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Inicio</a></li>
-                        <li><a href="sociedad.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Soziedad</a></li>
-                        <li><a href="comunidad.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Comunidad</a></li>
-                        <li><a href="contacto.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Contacto</a></li>
-                    </ul>
-                </div>
-
-                <!-- Columna 3: Contacto -->
-                <div>
-                    <h3 class="text-2xl font-bold mb-3">Contactos</h3>
-                    <p class="flex items-center gap-2"><span class="text-xl">✂️</span> 1-800-BANKO-24</p>
-                    <p class="flex items-center gap-2 mt-2"><span class="text-xl">✉️</span> sozie@Soziedad.com</p>
+    
+      <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-green-900/50 backdrop-blur-md p-10 rounded-2xl shadow-xl w-full max-w-md">
+    
+          <!-- Tabs -->
+          <div class="flex mb-6 border-b border-green-700">
+            <button id="tabLogin"
+                    class="flex-1 pb-2 border-b-2 border-yellow-400 font-bold">
+              Iniciar Sesión
+            </button>
+            <button id="tabRegister"
+                    class="flex-1 pb-2 opacity-70 hover:opacity-100 transition">
+              Registrarse
+            </button>
+          </div>
+    
+          <!-- LOGIN -->
+          <div id="loginForm" class="space-y-4">
+            <input id="loginEmail" type="email" placeholder="Correo"
+                   class="w-full p-3 rounded text-black">
+            <input id="loginPassword" type="password" placeholder="Contraseña"
+                   class="w-full p-3 rounded text-black">
+    
+            <!-- Botón login -->
+            <button id="btnLoginEmail"
+                    class="w-full bg-yellow-400 text-black font-bold py-2 rounded-xl hover:bg-yellow-300 transition">
+              Entrar
+            </button>
+    
+            <div class="text-center opacity-80">ó</div>
+    
+            <!-- Botón Google -->
+            <button id="btnGoogle"
+                    class="w-full bg-white text-black font-bold py-2 rounded-xl hover:scale-105 transition">
+              Continuar con Google
+            </button>
+    
+            <!-- Recuperar contraseña -->
+            <p id="recoverLink"
+               class="text-sm text-center underline cursor-pointer mt-3 opacity-70 hover:opacity-100">
+              ¿Olvidaste tu contraseña?
+            </p>
+          </div>
+    
+          <!-- REGISTER -->
+          <div id="registerForm" class="space-y-4 hidden">
+            <input id="regEmail" type="email" placeholder="Correo"
+                   class="w-full p-3 rounded text-black">
+            <input id="regPassword" type="password" placeholder="Contraseña"
+                   class="w-full p-3 rounded text-black">
+    
+            <!-- Registro -->
+            <button id="btnRegister"
+                    class="w-full bg-yellow-400 text-black font-bold py-2 rounded-xl hover:bg-yellow-300 transition">
+              Registrarse
+            </button>
+          </div>
+    
+          <p id="statusMsg" class="text-center mt-5 text-sm opacity-80"></p>
+    
+        </div>
+      </div>
+    
+      <script type="module">
+        import { 
+          loginWithEmail, registerUser, loginWithGoogle, resetPassword, 
+          onUserChanged 
+        } from "../JavaScript/auth.js";
+    
+        // --- Tabs ---
+        const tabLogin = document.getElementById("tabLogin");
+        const tabRegister = document.getElementById("tabRegister");
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+    
+        tabLogin.onclick = () => {
+          tabLogin.classList.add("border-yellow-400", "font-bold");
+          tabRegister.classList.remove("border-yellow-400", "font-bold");
+          registerForm.classList.add("hidden");
+          loginForm.classList.remove("hidden");
+        };
+    
+        tabRegister.onclick = () => {
+          tabRegister.classList.add("border-yellow-400", "font-bold");
+          tabLogin.classList.remove("border-yellow-400", "font-bold");
+          loginForm.classList.add("hidden");
+          registerForm.classList.remove("hidden");
+        };
+    
+        // Status
+        const status = document.getElementById("statusMsg");
+    
+        // --- Login con Email ---
+        document.getElementById("btnLoginEmail").onclick = async () => {
+          const email = document.getElementById("loginEmail").value.trim();
+          const pass = document.getElementById("loginPassword").value.trim();
+          try {
+            await loginWithEmail(email, pass);
+            status.innerHTML = "✅ Iniciando sesión...";
+          } catch (e) {
+            status.innerHTML = "❌ Error: " + e.message;
+          }
+        };
+    
+        // --- Registro ---
+        document.getElementById("btnRegister").onclick = async () => {
+          const email = document.getElementById("regEmail").value.trim();
+          const pass = document.getElementById("regPassword").value.trim();
+          try {
+            await registerUser(email, pass);
+            status.innerHTML = "✅ Registro exitoso. Iniciando sesión...";
+          } catch (e) {
+            status.innerHTML = "❌ Error: " + e.message;
+          }
+        };
+    
+        // --- Google ---
+        document.getElementById("btnGoogle").onclick = async () => {
+          try {
+            await loginWithGoogle();
+            status.innerHTML = "✅ Autenticado con Google...";
+          } catch (e) {
+            status.innerHTML = "❌ Error Google: " + e.message;
+          }
+        };
+    
+        // --- Recuperar contraseña ---
+        document.getElementById("recoverLink").onclick = async () => {
+          const email = prompt("Ingresa tu correo para recuperar tu contraseña:");
+          if (!email) return;
+          try {
+            await resetPassword(email);
+            status.innerHTML = "✅ Revisa tu correo para continuar.";
+          } catch (e) {
+            status.innerHTML = "❌ Error: " + e.message;
+          }
+        };
+    
+        // --- Redirige si usuario está logueado ---
+        onUserChanged((user) => {
+          if (user) {
+            status.innerHTML = `✅ Bienvenido, ${user.email}`;
+            setTimeout(() => (window.location.href = "comunidad.html"), 1500);
+          }
+        });
+      </script>
+    <footer class="bg-green-900 text-gray-200 pt-10 text-center md:text-left">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
+    
+            <!-- Columna 1: Logo, Descripción, Redes -->
+            <div class="md:text-left">
+            <div class="flex items-center gap-3 mb-3 justify-center md:justify-start">
+                <img src="../Imagenes/logo.jpeg" alt="Logo Orko" class="w-12 h-12 rounded-full">
+                <h2 class="text-2xl font-bold">SoziWAAAGH</h2>
+            </div>
+            <p class="text-sm mb-4">
+                Aquí conocerás a los orkos de Warhammer 40k como también info. de estos y foros con otros usuarios con datos al respecto.
+            </p>
+            </div>
+    
+            <!-- Columna 2: Quick Link -->
+            <div class="flex flex-col items-center">
+                <h3 class="text-2xl font-bold mb-3 ">Quick Links</h3>
+                <ul class="space-y-2 text-justify-center">
+                    <li><a href="index.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Inicio</a></li>
+                    <li><a href="sociedad.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Soziedad</a></li>
+                    <li><a href="comunidad.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Comunidad</a></li>
+                    <li><a href="contacto.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Contacto</a></li>
+                </ul>
+            </div>
+    
+            <!-- Columna 3: Contacto -->
+            <div>
+                <h3 class="text-2xl font-bold mb-3">Contactos</h3>
+                <p class="flex items-center gap-2"><span class="text-xl">✂️</span> 1-800-BANKO-24</p>
+                <p class="flex items-center gap-2 mt-2"><span class="text-xl">✉️</span> sozie@Soziedad.com</p>
+            </div>
+        </div>
+    
+        <hr class="border-gray-900 my-6">
+    
+        <!-- Copyright  -->
+            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 pb-5">
+                <p>© 2025 SoziWAAAGH. All rights reserved.</p>
+                <div class="flex space-x-4 mt-3 md:mt-0">
+                <a href="#" class="hover:text-gray-200">Privacy Policy</a>
+                <a href="#" class="hover:text-gray-200">Terms of Service</a>
+                <a href="#" class="hover:text-gray-200">Cookie Policy</a>
+                <a href="#" class="hover:text-gray-200">Accessibility</a>
                 </div>
             </div>
-
-            <hr class="border-gray-900 my-6">
-
-            <!-- Copyright  -->
-                <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 pb-5">
-                    <p>© 2025 SoziWAAAGH. All rights reserved.</p>
-                    <div class="flex space-x-4 mt-3 md:mt-0">
-                    <a href="#" class="hover:text-gray-200">Privacy Policy</a>
-                    <a href="#" class="hover:text-gray-200">Terms of Service</a>
-                    <a href="#" class="hover:text-gray-200">Cookie Policy</a>
-                    <a href="#" class="hover:text-gray-200">Accessibility</a>
-                    </div>
-                </div>
-        </footer>
-
-        <script src="../JavaScript/ScriptBotonesColor.js"></script>
-        <script src="../JavaScript/ScriptBoton.js"></script>
-        <script src="../JavaScript/ScriptFormulario.js"></script>
-
+    </footer>
     </body>
 </html>

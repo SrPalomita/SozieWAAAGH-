@@ -31,20 +31,41 @@
     </header> 
 
   <main class="p-10">
-    <h2 class="text-3xl text-yellow-400 mb-4">Foro de comentarios</h2>
-    <form class="bg-gray-800 p-4 rounded-lg mb-6">
-      <input type="text" placeholder="Tu nombre" class="w-full mb-3 p-2 rounded bg-black/30 text-white">
-      <textarea placeholder="Escribe tu comentario..." class="w-full mb-3 p-2 rounded bg-black/30 text-white"></textarea>
-      <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Comentar</button>
-    </form>
-    <div id="comentarios" class="space-y-4">
-      <!-- Aqui iran los comentarios -->
+        <div class="max-w-3xl mx-auto mt-10">
+    
+        <h1 class="text-3xl font-bold text-yellow-400 mb-6">Foros de la comunidad</h1>
+    
+        <!-- Crear foro -->
+        <div class="bg-green-900 p-5 rounded-lg shadow-lg mb-6">
+            <input id="foroTitulo" 
+                   class="w-full p-2 mb-3 rounded text-black"
+                   placeholder="Título del foro">
+    
+            <textarea id="foroDescripcion"
+                      class="w-full p-2 mb-3 rounded text-black"
+                      placeholder="Descripción del foro"></textarea>
+    
+            <button onclick="crearForo()" 
+                    class="bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-300 transition">
+                Crear foro
+            </button>
+        </div>
+    
+        <!-- Lista de foros -->
+        <div id="listaForos"></div>
+    
     </div>
+    
+    <script>
+        cargarForos();
+    </script>
   </main>
 
   <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"></script>
-  <script src="../JavaScript/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"></script>
+
+<script src="../JavaScript/firebase.js"></script>
+<script src="../JavaScript/foro.js"></script>
   
   <script>
   db.collection("test").add({
@@ -102,6 +123,7 @@
 
 </body>
 </html>
+
 
 
 

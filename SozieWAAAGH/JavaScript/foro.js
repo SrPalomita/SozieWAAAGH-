@@ -1,18 +1,19 @@
-// ======================
-// CREAR NUEVO FORO
-// ======================
-async function crearForo() {
+import { db } from "./firebase.js";
+import { collection, addDoc, query, orderBy, onSnapshot } 
+    from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
+
+export async function crearForo() {
     const titulo = document.getElementById("foroTitulo").value;
     const descripcion = document.getElementById("foroDescripcion").value;
 
     if (!titulo || !descripcion) {
-        alert("Completa los campos para crear un foro");
+        alert("Completa los campos");
         return;
     }
 
-    await db.collection("foros").add({
-        titulo: titulo,
-        descripcion: descripcion,
+    await addDoc(collection(db, "foros"), {
+        titulo,
+        descripcion,
         fecha: Date.now()
     });
 
@@ -21,36 +22,21 @@ async function crearForo() {
 }
 
 
-// ======================
-// CARGAR LISTA DE FOROS
-// ======================
-function cargarForos() {
+export function cargarForos() {
     const contenedor = document.getElementById("listaForos");
 
-    db.collection("foros")
-        .orderBy("fecha", "desc")
-        .onSnapshot((snapshot) => {
-            contenedor.innerHTML = ""; // limpiar antes de volver a dibujar
+    const q = query(collection(db, "foros"), orderBy("fecha", "desc"));
 
-            snapshot.forEach((doc) => {
-                const foro = doc.data();
-                const id = doc.id;
-
-                contenedor.innerHTML += `
-                    <div class="bg-green-900 p-5 rounded-lg shadow mb-4 cursor-pointer hover:bg-green-800 transition"
-                         onclick="abrirForo('${id}')">
-                        <h3 class="text-xl font-bold text-yellow-300">${foro.titulo}</h3>
-                        <p class="text-gray-200">${foro.descripcion}</p>
-                    </div>
-                `;
-            });
+    onSnapshot(q, snapshot => {
+        contenedor.innerHTML = "";
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            contenedor.innerHTML += `
+                <div class="bg-green-900 p-5 rounded-lg shadow mb-4">
+                    <h3 class="text-xl font-bold">${data.titulo}</h3>
+                    <p>${data.descripcion}</p>
+                </div>
+            `;
         });
-}
-
-
-// ======================
-// ABRIR FORO INDIVIDUAL
-// ======================
-function abrirForo(id) {
-    window.location.href = "foro.html?id=" + id;
+    });
 }

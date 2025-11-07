@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>Cookies</title>
+    <style>
+        .cookie-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .cookie-item {
+            margin: 5px 0;
+            padding: 5px;
+            background: white;
+            border-radius: 3px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function anadir() {
+            setCookie("codigo", document.getElementById("codigo").value);
+            setCookie("nombre", document.getElementById("nombre").value);
+            mostrarCookies();
+        }
+
+        function borrar() {
+            delCookie("codigo");
+            delCookie("nombre");
+            // Limpiar los campos de texto también
+            document.getElementById("codigo").value = "";
+            document.getElementById("nombre").value = "";
+            mostrarCookies();
+        }
+
+        function delCookie(cname) {
+            // CORREGIDO: Agregar el mismo path que usamos al crear
+            document.cookie = cname + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+            console.log("Intentando borrar cookie: " + cname);
+        }
+
+        function setCookie(cname, cvalue) {
+            console.log(cname + ":" + cvalue);
+            document.cookie = cname + "=" + cvalue + "; path=/";
+            console.log("Cookie creada: " + document.cookie);
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ')
+                    c = c.substring(1);
+                if (c.indexOf(name) == 0)
+                    return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+        // FUNCIÓN MEJORADA: Mostrar cookies en la página
+        function mostrarCookies() {
+            var cookies = document.cookie;
+            var cookieList = document.getElementById('cookieList');
+            var cookieString = document.getElementById('cookieString');
+
+            console.log("Mostrando cookies: " + cookies);
+
+            if (cookies === "") {
+                cookieList.innerHTML = "<div class='cookie-item' style='color: red;'>No hay cookies guardadas</div>";
+            } else {
+                var cookieArray = cookies.split(';');
+                var html = "";
+
+                for (var i = 0; i < cookieArray.length; i++) {
+                    var cookie = cookieArray[i].trim();
+                    var separatorIndex = cookie.indexOf('=');
+                    var name = cookie.substring(0, separatorIndex);
+                    var value = cookie.substring(separatorIndex + 1);
+
+                    html += "<div class='cookie-item'><strong>" + name + ":</strong> " + value + "</div>";
+                }
+
+                cookieList.innerHTML = html;
+            }
+
+            cookieString.textContent = "document.cookie: " + (cookies || "vacío");
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gradient-to-r from-green-800 via-green-500 to-green-400 text-black font-sans">
+    <h2>Cookies</h2>
+
+    Codigo: <input type="text" id="codigo">
+    Nombre: <input type="text" id="nombre">
+
+    <button onclick="anadir()">Añadir cookies</button>
+    <button onclick="borrar()">Borrar cookies</button>
+    <button onclick="mostrarCookies()">Actualizar vista</button>
+
+    <div class="cookie-info">
+        <h3>Cookies Guardadas:</h3>
+        <div id="cookieList">Cargando cookies...</div>
+        <div id="cookieString" style="margin-top: 10px; font-style: italic; font-size: 12px;"></div>
+    </div>
+
+    <script>
+        // Cargar valores si existen cookies
+        if (getCookie("codigo") != "") {
+            document.getElementById("codigo").value = getCookie("codigo");
+        }
+        if (getCookie("nombre") != "") {
+            document.getElementById("nombre").value = getCookie("nombre");
+        }
+
+        // Mostrar cookies al cargar la página
+        mostrarCookies();
+    </script>
+</body>
+
+</html>

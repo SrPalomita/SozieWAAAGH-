@@ -1,140 +1,242 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foro — SozieWAAAGH!</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/jpeg" href="../Imagenes/logo.jpeg">
-</head>
-
-<body class="bg-gradient-to-r from-green-800 via-green-600 to-green-500 text-white font-sans">
-
-    <!-- Header básico -->
-    <header class="p-5 bg-black/30 backdrop-blur-md sticky top-0 z-50">
-        <h1 class="text-center text-3xl font-extrabold text-yellow-400">Foro Orko</h1>
-    </header>
-
-    <main class="max-w-3xl mx-auto mt-10 p-6">
-
-        <!-- Info del foro -->
-        <div id="foroInfo" class="bg-green-900 p-6 rounded-lg shadow-lg mb-8">
-            <h2 id="foroTitulo" class="text-3xl font-bold text-yellow-300 mb-2"></h2>
-            <p id="foroDescripcion" class="text-lg text-gray-200"></p>
-        </div>
-
-        <!-- Comentarios -->
-        <h3 class="text-2xl font-bold text-yellow-400 mb-4">Comentarios</h3>
-
-        <div id="comentariosLista" class="space-y-4 mb-8"></div>
-
-        <!-- Agregar comentario -->
-        <div class="bg-green-900 p-5 rounded-lg shadow-lg">
-            <input id="comentarioAutor" 
-                   class="w-full p-2 mb-3 rounded text-black"
-                   placeholder="Tu nombre orko (opcional)">
-            
-            <textarea id="comentarioTexto" 
-                      class="w-full p-2 mb-3 rounded text-black"
-                      placeholder="Escribe tu comentario..."></textarea>
-
-            <button onclick="agregarComentario()" 
-                class="bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-300 transition">
-                Agregar comentario
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Foro — SozieWAAAGH!</title>
+    
+      <link rel="icon" type="image/png" href="../Imagenes/logo.jpeg">
+      <script src="https://cdn.tailwindcss.com"></script>
+    
+      <!-- AOS Animations -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css">
+    </head>
+        
+    <body class="bg-gradient-to-r from-green-800 via-green-600 to-green-400 text-white font-sans">
+        
+        <!-- ===========================
+               NAVBAR
+        =========================== -->
+        <header class="sticky top-0 z-50 bg-black/20 backdrop-blur-md">
+          <div class="flex items-center justify-between px-7 py-5 relative">
+        
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+              <img src="../Imagenes/logo.jpeg" alt="Logo ORK" class="w-12 h-12 rounded-lg">
+              <span class="text-xl font-bold">SozieWAAAGH!</span>
+            </div>
+        
+            <!-- Navegación centrada -->
+            <nav class="absolute left-1/2 transform -translate-x-1/2">
+              <ul class="flex space-x-8">
+                <li><a href="Index.html" class="text-blue-50 font-semibold hover:text-green-300">Inicio</a></li>
+                <li><a href="sociedad.html" class="text-blue-50 font-semibold hover:text-green-300">Sociedad</a></li>
+                <li><a href="comunidad.html" class="text-blue-50 font-semibold hover:text-green-300">Comunidad</a></li>
+                <li><a href="Contacto.html" class="text-blue-50 font-semibold hover:text-green-300">Contacto</a></li>
+        
+                <!-- Botón dinámico -->
+                <li id="btnAuthArea"></li>
+              </ul>
+            </nav>
+        
+          </div>
+        </header>
+        
+        
+        <!-- ===========================
+               CONTENIDO PRINCIPAL
+        =========================== -->
+        
+        <main class="max-w-4xl mx-auto p-10 space-y-10">
+        
+          <div id="foroContenido" class="bg-green-900 p-7 rounded-xl shadow-xl" data-aos="fade-up">
+            <h1 id="foroTitulo" class="text-4xl font-extrabold text-yellow-400 mb-3"></h1>
+            <p id="foroDescripcion" class="text-gray-200 text-lg"></p>
+        
+            <!-- Likes -->
+            <button id="btnLike" 
+              class="mt-5 px-5 py-2 bg-red-600 hover:bg-red-500 rounded-lg font-bold flex items-center gap-2 shadow-lg transition">
+              💥 WAAAGH! <span id="likeCount">0</span>
             </button>
+          </div>
+        
+          <hr class="border-yellow-300">
+        
+          <!-- ===========================
+                COMENTARIOS
+          =========================== -->
+          <section>
+            <h2 class="text-3xl font-extrabold text-yellow-300 mb-4" data-aos="fade-right">
+              Comentarios
+            </h2>
+        
+            <!-- SOLO PARA USUARIOS LOGUEADOS -->
+            <div id="commentBox" class="hidden bg-green-900 p-5 rounded-xl shadow-lg mb-5" data-aos="fade-up">
+              <textarea id="commentText"
+                        class="w-full p-3 rounded text-black mb-3"
+                        placeholder="Escribe un comentario..."></textarea>
+        
+              <button id="btnEnviarComentario"
+                      class="bg-yellow-400 text-black font-bold px-5 py-2 rounded-lg hover:bg-yellow-300 transition">
+                Publicar comentario
+              </button>
+            </div>
+        
+            <!-- Si no está logueado -->
+            <p id="msgNoAuth" class="hidden text-center text-red-200 text-lg mb-6">
+              Debes <a href="login.html" class="underline text-yellow-300">iniciar sesión</a> para comentar.
+            </p>
+        
+            <!-- Lista de comentarios -->
+            <div id="listaComentarios" class="space-y-4" data-aos="fade-up"></div>
+          </section>
+        
+        </main>
+        
+        
+        <!-- ===========================
+               FOOTER
+        =========================== -->
+        <footer class="bg-green-900 text-gray-200 pt-10 text-center md:text-left">
+          <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div>
+              <div class="flex items-center gap-3 mb-3 justify-center md:justify-start">
+                <img src="../Imagenes/logo.jpeg" class="w-12 h-12 rounded-full">
+                <h2 class="text-2xl font-bold">SozieWAAAGH</h2>
+              </div>
+              <p class="text-sm">Foro orko del WAAAGH galáctico.</p>
+            </div>
+        
+            <div class="flex flex-col items-center">
+              <h3 class="text-2xl font-bold mb-3">Quick Links</h3>
+              <ul class="space-y-2">
+                <li><a href="Index.html" class="hover:text-green-300">Inicio</a></li>
+                <li><a href="sociedad.html" class="hover:text-green-300">Soziedad</a></li>
+                <li><a href="comunidad.html" class="hover:text-green-300">Comunidad</a></li>
+                <li><a href="Contacto.html" class="hover:text-green-300">Contacto</a></li>
+              </ul>
+            </div>
+        
+            <div>
+              <h3 class="text-2xl font-bold mb-3">Contactos</h3>
+              <p class="flex items-center gap-2">✂️ 1-800-BANKO-24</p>
+              <p class="flex items-center gap-2 mt-2">✉️ sozie@Soziedad.com</p>
+            </div>
+          </div>
+        
+          <hr class="border-gray-900 my-6">
+        
+          <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 pb-5">
+            <p>© 2025 SoziWAAAGH. All rights reserved.</p>
+            <div class="flex space-x-4">
+              <a href="#" class="hover:text-gray-200">Privacy Policy</a>
+              <a href="#" class="hover:text-gray-200">Terms of Service</a>
+              <a href="#" class="hover:text-gray-200">Cookie Policy</a>
+              <a href="#" class="hover:text-gray-200">Accessibility</a>
+            </div>
+          </div>
+        </footer>
+        
+        
+        <!-- ===========================
+               SCRIPTS
+        =========================== -->
+        
+        <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+        <script>AOS.init();</script>
+        
+        <!-- Auth Navbar -->
+        <script type="module">
+        import { onUserChanged, logout } from "../JavaScript/auth.js";
+        
+        const area = document.getElementById("btnAuthArea");
+        const commentBox = document.getElementById("commentBox");
+        const msgNoAuth = document.getElementById("msgNoAuth");
+        
+        onUserChanged((user) => {
+            if (!user) {
+                area.innerHTML = `<a href="login.html" class="text-blue-50 font-semibold hover:text-green-300">Ingresar</a>`;
+                msgNoAuth.classList.remove("hidden");
+                commentBox.classList.add("hidden");
+            } else {
+                area.innerHTML = `
+                  <div class="relative group">
+                    <button class="font-semibold text-green-300 hover:text-white">Mi Cuenta</button>
+                    <div class="absolute hidden group-hover:block bg-green-900 p-3 rounded-lg shadow-xl right-0 mt-2">
+                      <p class="text-sm mb-2 opacity-80">${user.displayName}</p>
+                      <button id="logoutBtn" class="hover:text-yellow-400 font-bold">Cerrar sesión</button>
+                    </div>
+                  </div>
+                `;
+        
+                commentBox.classList.remove("hidden");
+                msgNoAuth.classList.add("hidden");
+        
+                setTimeout(() => {
+                    const btn = document.getElementById("logoutBtn");
+                    if (btn) btn.onclick = async () => { await logout(); window.location.reload(); };
+                }, 50);
+            }
+        });
+        </script>
+            <footer class="bg-green-900 text-gray-200 pt-10 text-center md:text-left">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
+
+            <!-- Columna 1: Logo, Descripción, Redes -->
+            <div class="md:text-left">
+            <div class="flex items-center gap-3 mb-3 justify-center md:justify-start">
+                <img src="../Imagenes/logo.jpeg" alt="Logo Orko" class="w-12 h-12 rounded-full">
+                <h2 class="text-2xl font-bold">SoziWAAAGH</h2>
+            </div>
+            <p class="text-sm mb-4">
+                Aquí conocerás a los orkos de Warhammer 40k como también info. de estos y foros con otros usuarios con datos al respecto.
+            </p>
+            </div>
+
+            <!-- Columna 2: Quick Link -->
+            <div class="flex flex-col items-center">
+                <h3 class="text-2xl font-bold mb-3 ">Quick Links</h3>
+                <ul class="space-y-2 text-justify-center">
+                    <li><a href="index.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Inicio</a></li>
+                    <li><a href="sociedad.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Soziedad</a></li>
+                    <li><a href="comunidad.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Comunidad</a></li>
+                    <li><a href="contacto.html" class="hover:text-blue-50 font-semibold hover:text-green-300">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Contacto -->
+            <div>
+                <h3 class="text-2xl font-bold mb-3">Contactos</h3>
+                <p class="flex items-center gap-2"><span class="text-xl">✂️</span> 1-800-BANKO-24</p>
+                <p class="flex items-center gap-2 mt-2"><span class="text-xl">✉️</span> sozie@Soziedad.com</p>
+            </div>
         </div>
 
-    </main>
+        <hr class="border-gray-900 my-6">
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"></script>
+        <!-- Copyright  -->
+            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 pb-5">
+                <p>© 2025 SoziWAAAGH. All rights reserved.</p>
+                <div class="flex space-x-4 mt-3 md:mt-0">
+                <a href="#" class="hover:text-gray-200">Privacy Policy</a>
+                <a href="#" class="hover:text-gray-200">Terms of Service</a>
+                <a href="#" class="hover:text-gray-200">Cookie Policy</a>
+                <a href="#" class="hover:text-gray-200">Accessibility</a>
+                </div>
+            </div>
+    </footer>
+        
+        <!-- Lógica del foro -->
+        <script type="module">
+          import { cargarForoIndividual, enviarComentario, darLike } from "../JavaScript/foro.js";
+        
+          const urlParams = new URLSearchParams(window.location.search);
+          const foroId = urlParams.get("id");
+        
+          cargarForoIndividual(foroId);
+          document.getElementById("btnEnviarComentario").onclick = () => enviarComentario(foroId);
+          document.getElementById("btnLike").onclick = () => darLike(foroId);
+        </script>
 
-    <!-- Configuración Firebase (tu archivo) -->
-    <script src="../JavaScript/firebase.js"></script>
-
-    <script>
-        // ========================
-        // 1. Obtener ID desde URL
-        // ========================
-        const params = new URLSearchParams(window.location.search);
-        const foroId = params.get("id");
-
-        if (!foroId) {
-            alert("Error: no se encontró el foro.");
-            window.location.href = "comunidad.html";
-        }
-
-        // ========================
-        // 2. Cargar datos del foro
-        // ========================
-        function cargarForo() {
-            db.collection("foros").doc(foroId).onSnapshot(doc => {
-                if (!doc.exists) return;
-
-                const foro = doc.data();
-                document.getElementById("foroTitulo").innerText = foro.titulo;
-                document.getElementById("foroDescripcion").innerText = foro.descripcion;
-            });
-        }
-
-        // ========================
-        // 3. Cargar comentarios
-        // ========================
-        function cargarComentarios() {
-            const lista = document.getElementById("comentariosLista");
-
-            db.collection("foros")
-              .doc(foroId)
-              .collection("comentarios")
-              .orderBy("fecha", "asc")
-              .onSnapshot(snapshot => {
-
-                  lista.innerHTML = ""; 
-
-                  snapshot.forEach(doc => {
-                      const comentario = doc.data();
-
-                      lista.innerHTML += `
-                          <div class="bg-green-800 p-4 rounded-lg shadow">
-                              <p class="font-bold text-yellow-300">${comentario.autor || "Orko Anónimo"}</p>
-                              <p>${comentario.texto}</p>
-                              <p class="text-gray-300 text-sm mt-2">${new Date(comentario.fecha).toLocaleString()}</p>
-                          </div>
-                      `;
-                  });
-              });
-        }
-
-        // ========================
-        // 4. Agregar comentario
-        // ========================
-        async function agregarComentario() {
-
-            const autor = document.getElementById("comentarioAutor").value || "Orko Anónimo";
-            const texto = document.getElementById("comentarioTexto").value;
-
-            if (!texto.trim()) {
-                alert("Tu comentario está vacío.");
-                return;
-            }
-
-            await db.collection("foros")
-                    .doc(foroId)
-                    .collection("comentarios")
-                    .add({
-                        autor: autor,
-                        texto: texto,
-                        fecha: Date.now()
-                    });
-
-            document.getElementById("comentarioTexto").value = "";
-        }
-
-        // Inicializar
-        cargarForo();
-        cargarComentarios();
-    </script>
-
-</body>
+    </body>
 </html>

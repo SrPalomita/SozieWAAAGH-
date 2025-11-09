@@ -1,18 +1,19 @@
 import { db } from "./firebase.js";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  updateDoc,
-  doc,
-  arrayUnion,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 import { auth } from "./auth.js";
 
+import {
+    collection,
+    addDoc,
+    getDocs,
+    updateDoc,
+    doc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
+// ================================
 // ✅ Crear foro
+// ================================
 export async function crearForo() {
     const titulo = document.getElementById("foroTitulo").value.trim();
     const descripcion = document.getElementById("foroDescripcion").value.trim();
@@ -31,6 +32,7 @@ export async function crearForo() {
         titulo,
         descripcion,
         autor: auth.currentUser.displayName,
+        uidAutor: auth.currentUser.uid,
         likes: [],
         fecha: serverTimestamp()
     });
@@ -41,13 +43,18 @@ export async function crearForo() {
     cargarForos();
 }
 
+
+
+// ================================
 // ✅ Like único por usuario
+// ================================
 async function toggleLike(foroId, likes) {
     const uid = auth.currentUser?.uid;
     if (!uid) return alert("Inicia sesión para dar like.");
 
     const docRef = doc(db, "foros", foroId);
-    let nuevoArray;
+
+    let nuevoArray = [];
 
     if (likes.includes(uid)) {
         nuevoArray = likes.filter(id => id !== uid);
@@ -59,23 +66,31 @@ async function toggleLike(foroId, likes) {
     cargarForos();
 }
 
+window.toggleLike = toggleLike;
 
-// ✅ Crear tarjeta HTML de foro
+
+
+// ================================
+// ✅ Crear Tarjeta HTML de foro
+// ================================
 function generarTarjeta(foro, id) {
     const likes = foro.likes || [];
 
     return `
-    <div class="bg-green-900 p-5 rounded-lg shadow-lg mb-5">
+    <div class="bg-green-900 p-5 rounded-lg shadow-lg mb-6 transition hover:scale-[1.01]">
 
-        <h3 class="text-2xl font-bold text-yellow-300">${foro.titulo}</h3>
-        <p class="text-gray-300 mt-1">${foro.descripcion}</p>
+        <h3 class="text-2xl font-extrabold text-yellow-300">${foro.titulo}</h3>
+
+        <p class="text-gray-200 mt-2">
+            ${foro.descripcion}
+        </p>
 
         <p class="text-sm text-green-300 mt-2">
             Creado por: <strong>${foro.autor}</strong>
         </p>
 
         <button onclick="toggleLike('${id}', ${JSON.stringify(likes)})"
-                class="mt-3 bg-yellow-400 text-black px-3 py-1 rounded-lg shadow hover:bg-yellow-300 transition">
+            class="mt-3 bg-yellow-400 text-black px-3 py-1 rounded-lg shadow hover:bg-yellow-300 transition">
             👍 ${likes.length}
         </button>
 
@@ -83,18 +98,29 @@ function generarTarjeta(foro, id) {
 }
 
 
-// ✅ Cargar foros
+
+// ================================
+// ✅ Cargar Foros
+// ================================
 export async function cargarForos() {
     const lista = document.getElementById("listaForos");
-    lista.innerHTML = "<p class='text-white'>Cargando foros...</p>";
+
+    if (!lista) return;
+
+    lista.innerHTML = `
+        <p class="text-yellow-200 animate-pulse">Cargando foros...</p>
+    `;
 
     const snap = await getDocs(collection(db, "foros"));
 
     let html = "";
-    snap.forEach((doc) => html += generarTarjeta(doc.data(), doc.id));
+    snap.forEach((doc) => {
+        html += generarTarjeta(doc.data(), doc.id);
+    });
 
-    lista.innerHTML = html || "<p>No hay foros aún.</p>";
+    lista.innerHTML = html || `
+        <p class="text-center text-gray-200 mt-10">
+            No hay foros aún. ¡Crea el primero, Orko!
+        </p>
+    `;
 }
-
-// ✅ Hacer disponible para el navegador
-window.toggleLike = toggleLike;

@@ -1,3 +1,5 @@
+import { app } from "./firebase.js";
+
 import {
   getAuth,
   GoogleAuthProvider,
@@ -10,53 +12,70 @@ import {
   sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-export const auth = getAuth();
+// ✅ Importar auth asociado a la app correcta
+export const auth = getAuth(app);
+
+// ✅ Proveedor de Google (opcional, pero más limpio)
 export const provider = new GoogleAuthProvider();
 
-// ✅ Generador de nombre automático
+// ======================================================
+// ✅ Generar nombre Orko aleatorio
+// ======================================================
 function generarNombreOrko() {
   const n = Math.floor(Math.random() * 9000) + 1000;
   return "Orko_" + n;
 }
 
-// ✅ Asegurar nombre al usuario
+// ======================================================
+// ✅ Asegurar que el usuario tenga nombre
+// ======================================================
 async function asegurarNombre(usuario) {
   if (!usuario) return;
 
-  if (!usuario.displayName || usuario.displayName === "") {
+  if (!usuario.displayName || usuario.displayName.trim() === "") {
     await updateProfile(usuario, {
       displayName: generarNombreOrko()
     });
   }
 }
 
+// ======================================================
 // ✅ Login con Google
+// ======================================================
 export async function loginWithGoogle() {
   const userCred = await signInWithPopup(auth, provider);
   await asegurarNombre(userCred.user);
   return userCred;
 }
 
-// ✅ Login con Email/Password
+// ======================================================
+// ✅ Login con email
+// ======================================================
 export async function loginWithEmail(email, password) {
   const userCred = await signInWithEmailAndPassword(auth, email, password);
   await asegurarNombre(userCred.user);
   return userCred;
 }
 
+// ======================================================
 // ✅ Registro
+// ======================================================
 export async function registerUser(email, password) {
   const userCred = await createUserWithEmailAndPassword(auth, email, password);
   await asegurarNombre(userCred.user);
   return userCred;
 }
 
-// ✅ Cerrar sesión
+// ======================================================
+// ✅ Logout
+// ======================================================
 export async function logout() {
   return await signOut(auth);
 }
 
-// ✅ Listener
+// ======================================================
+// ✅ Listener de usuario logueado
+// ======================================================
 export function onUserChanged(callback) {
   onAuthStateChanged(auth, async (user) => {
     if (user) await asegurarNombre(user);
@@ -64,8 +83,9 @@ export function onUserChanged(callback) {
   });
 }
 
-// ✅ Recuperar contraseña
+// ======================================================
+// ✅ Reset Password
+// ======================================================
 export async function resetPassword(email) {
   return await sendPasswordResetEmail(auth, email);
 }
-

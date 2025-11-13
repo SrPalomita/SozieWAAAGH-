@@ -25,23 +25,24 @@ document.addEventListener("DOMContentLoaded", () => {
         // Usuario logueado ✅
         navbar.innerHTML = `
             <div class="relative group">
-
-                <button class="font-bold text-yellow-300 text-lg hover:text-white">
+                <button class="font-bold text-yellow-300 text-lg hover:text-white flex items-center gap-2">
                     👋 ${user.displayName || "Orko"}
+                    <svg class="w-4 h-4 transform group-hover:rotate-180 transition" xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
                 </button>
-
-                <div class="absolute right-0 mt-2 w-40 bg-green-900 p-3 rounded-lg shadow-xl hidden group-hover:block">
-
+        
+                <div class="absolute right-0 mt-2 w-40 bg-green-900 p-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition duration-200">
                     <p class="text-sm mb-2 opacity-80">${user.displayName}</p>
-
                     <button id="logoutBtn"
                         class="w-full text-left font-bold text-red-400 hover:text-red-200">
                         Cerrar sesión
                     </button>
-
                 </div>
             </div>
         `;
+
 
         /* Activar botón logout */
         setTimeout(() => {

@@ -16,30 +16,33 @@
   AOS.init();
   </script>
 
-  <!-- Header -->
-    <header class="sticky top-0 z-50 bg-black/20 backdrop-blur-md">
-        <div class="flex items-center justify-between px-7 py-5 relative">
-            <!-- Logo + título a la izquierda -->
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center"><img src="../Imagenes/logo.jpeg" alt="Logo ORK" class="w-full h-full object-cover"></div>
-                <span class="text-xl font-bold">SozieWAAAGH!</span>
-            </div>
-            <!-- Navegación centrada -->
-            <nav class="absolute left-1/2 transform -translate-x-1/2">
-                <ul class="flex space-x-8">
-                  <li><a href="Index.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Inicio</a></li>
-                  <li><a href="sociedad.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Sociedad</a></li>
-                  <li><a href="comunidad.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Comunidad</a></li>
-                  <li><a href="Contacto.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Contacto</a></li>
-                  <li><a href="cookies.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Cookies</a></li> 
-                </ul>
-            </nav>
+<!-- ===========================
+           NAVBAR
+=========================== -->
+<header class="sticky top-0 z-50 bg-black/20 backdrop-blur-md">
+  <div class="flex items-center justify-between px-7 py-5 relative">
 
-          <!-- Zona dinámica -->
-          <div id="navbar-user-area"></div>
-          
-        </div>
-    </header>
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <img src="../Imagenes/logo.jpeg" alt="Logo ORK" class="w-12 h-12 rounded-lg">
+      <span class="text-xl font-bold">SozieWAAAGH!</span>
+    </div>
+
+    <!-- Navegación centrada -->
+    <nav class="absolute left-1/2 transform -translate-x-1/2">
+      <ul class="flex space-x-8">
+        <li><a href="index.html" class="text-blue-50 font-semibold hover:text-green-300">Inicio</a></li>
+        <li><a href="sociedad.html" class="text-blue-50 font-semibold hover:text-green-300">Sociedad</a></li>
+        <li><a href="comunidad.html" class="text-blue-50 font-semibold hover:text-green-300">Comunidad</a></li>
+        <li><a href="Contacto.html" class="text-blue-50 font-semibold hover:text-green-300">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- Zona dinámica -->
+    <div id="navbar-user-area"></div>
+
+  </div>
+</header>
 
   <!-- Cuerpo principal -->
   <main class="p-10 text-center">
@@ -223,6 +226,7 @@
 
 </body>
 </html>
+
 
 
 

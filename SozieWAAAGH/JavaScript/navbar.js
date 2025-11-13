@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </svg>
                 </button>
         
-                <div class="absolute right-0 mt-2 w-40 bg-green-900 p-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition duration-200">
+                <div class="absolute right-0 mt-2 w-40 bg-green-900 p-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition duration-900">
                     <p class="text-sm mb-2 opacity-80">${user.displayName}</p>
                     <button id="logoutBtn"
                         class="w-full text-left font-bold text-red-400 hover:text-red-200">

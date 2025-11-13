@@ -8,27 +8,34 @@
     <script src="https://cdn.tailwindcss.com"></script> 
 </head>
 <body class="bg-gradient-to-r from-green-800 via-green-500 to-green-400 text-gray-150 font-sans">
-    <header class="sticky top-0 z-50 bg-black/20 backdrop-blur-md"> 
-      <div class="flex items-center justify-between px-7 py-5 relative"> 
+  <!-- ===========================
+        NAVBAR DINÁMICA
+  =========================== -->
+  <header class="sticky top-0 z-50 bg-black/20 backdrop-blur-md">
+    <div class="flex items-center justify-between px-7 py-5 relative">
 
-        <!-- Logo + título --> 
-        <div class="flex items-center gap-3"> 
-          <img src="../Imagenes/logo.jpeg" alt="Logo ORK" class="w-12 h-12 rounded-lg"> 
-          <span class="text-xl font-bold">SozieWAAAGH!</span> 
-        </div> 
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <img src="./SozieWAAAGH/Imagenes/logo.jpeg" alt="Logo ORK" class="w-12 h-12 rounded-lg">
+        <span class="text-xl font-bold">SozieWAAAGH!</span>
+      </div>
 
-        <!-- Navegación --> 
-        <nav class="absolute left-1/2 transform -translate-x-1/2"> 
-          <ul class="flex space-x-8"> 
-            <li><a href="index.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Inicio</a></li>
-            <li><a href="sociedad.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Sociedad</a></li>
-            <li><a href="comunidad.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Comunidad</a></li>
-            <li><a href="Contacto.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Contacto</a></li>
-            <li><a href="login.html" target="_blank" class="text-blue-50 font-semibold hover:text-green-300">Ingresar</a></li>
-          </ul> 
-        </nav> 
-      </div> 
-    </header> 
+      <!-- Navegación centrada -->
+      <nav class="absolute left-1/2 transform -translate-x-1/2">
+        <ul class="flex space-x-8">
+          <li><a href="./index.html" class="text-blue-50 font-semibold hover:text-green-300">inicio</a></li>
+          <li><a href="./SozieWAAAGH/HTML/sociedad.html" class="text-blue-50 font-semibold hover:text-green-300">sociedad</a></li>
+          <li><a href="./SozieWAAAGH/HTML/comunidad.html" class="text-blue-50 font-semibold hover:text-green-300">comunidad</a></li>
+          <li><a href="./SozieWAAAGH/HTML/contacto.html" class="text-blue-50 font-semibold hover:text-green-300">contacto</a></li>
+        </ul>
+      </nav>
+
+      <!-- 🔥 Zona dinámica del usuario -->
+      <div id="navbar-user-area"></div>
+
+    </div>
+  </header>
+    
     <footer class="bg-green-900 text-gray-200 pt-10 text-center md:text-left">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
 
@@ -78,4 +85,5 @@
 </body>
 
 </html>
+
 

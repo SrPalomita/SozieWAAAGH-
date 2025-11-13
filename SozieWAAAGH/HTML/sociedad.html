@@ -33,8 +33,9 @@
 </head>
 <body class="bg-gradient-to-r from-green-900 via-green-700 to-green-400 text-white font-sans">
 
-  <!-- AOS JS (will init at end) -->
+  <!-- AOS JS-->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+
 
   <!-- HEADER -->
   <header class="sticky top-0 z-50 bg-black/20 backdrop-blur-md">
@@ -50,12 +51,16 @@
       <!-- centered nav (kept for consistency) -->
       <nav class="absolute left-1/2 transform -translate-x-1/2">
         <ul class="flex space-x-8">
-          <li><a href="Index.html" class="text-blue-50 font-semibold hover:text-green-300">Introducción</a></li>
-          <li><a href="sociedad.html" class="text-blue-50 font-semibold hover:text-green-300">Sociedad</a></li>
-          <li><a href="comunidad.html" class="text-blue-50 font-semibold hover:text-green-300">Comunidad</a></li>
-          <li><a href="contacto.html" class="text-blue-50 font-semibold hover:text-green-300">Contacto</a></li>
+          <li><a href="./index.html" class="text-blue-50 font-semibold hover:text-green-300">inicio</a></li>
+          <li><a href="./SozieWAAAGH/HTML/sociedad.html" class="text-blue-50 font-semibold hover:text-green-300">sociedad</a></li>
+          <li><a href="./SozieWAAAGH/HTML/comunidad.html" class="text-blue-50 font-semibold hover:text-green-300">comunidad</a></li>
+          <li><a href="./SozieWAAAGH/HTML/contacto.html" class="text-blue-50 font-semibold hover:text-green-300">contacto</a></li>
         </ul>
       </nav>
+
+      <!-- Zona dinámica del usuario -->
+      <div id="navbar-user-area"></div>
+      
     </div>
   </header>
 
@@ -426,7 +431,12 @@
             </div>
         </div>
     </footer>
+
+    <!-- Navbar dinámica -->
+    <script type="module" src="https://srpalomita.github.io/SozieWAAAGH-/SozieWAAAGH/JavaScript/navbar.js"></script>
+  
   </body>
 </html>
+
 
 

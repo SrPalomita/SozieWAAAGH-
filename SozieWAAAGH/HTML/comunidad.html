@@ -145,15 +145,31 @@
 <script type="module" src="../JavaScript/auth.js"></script>
 <script type="module" src="../JavaScript/navbar.js"></script>
 
-<!-- Foro -->
+<!-- Funciones del foro -->
 <script type="module">
-  import { cargarForos, crearForo } from "../JavaScript/foro.js";
-  window.crearForo = crearForo;
-  cargarForos();
+import { onUserChanged } from "../JavaScript/auth.js";
+import { cargarForos, crearForo } from "../JavaScript/foro.js";
+
+const crearBox = document.getElementById("crearForoBox");
+const msgNoAuth = document.getElementById("msgNoAuth");
+
+onUserChanged((user) => {
+  if (!user) {
+    crearBox.classList.add("hidden");
+    msgNoAuth.classList.remove("hidden");
+  } else {
+    crearBox.classList.remove("hidden");
+    msgNoAuth.classList.add("hidden");
+  }
+});
+
+window.crearForo = crearForo; 
+cargarForos();
 </script>
 
 </body>
 </html>
+
 
 
 
